@@ -9,29 +9,63 @@
         .header {
             padding: 2.5rem 0.5rem 2rem 0.5rem;
         }
+        footer .aui-iconfont {
+          /*font-weight: bold;*/
+        }
     </style>
 </head>
 <body>
-    <header class="aui-bar aui-bar-nav aui-text-left header" id="header">
-        <h1>
-            <a class="aui-btn aui-pull-right" tapmode onclick="openClub()">
-                <i class="aui-iconfont aui-icon-question"></i>
-            </a>
-            AUI 2.1
-        </h1>
-    </header>
+
+  <header class="aui-bar aui-bar-nav aui-text-left header" id="header">
+      <h1>
+          <a class="aui-btn aui-pull-right" tapmode onclick="openClub()">
+              <i class="aui-iconfont aui-icon-question"></i>
+          </a>
+          AUI 2.1
+      </h1>
+  </header>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+        <div class="aui-bar-tab-item aui-active" tapmode>
+            <i class="aui-iconfont aui-icon-home"></i>
+            <div class="aui-bar-tab-label">首页</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <i class="aui-iconfont aui-icon-star"></i>
+            <div class="aui-bar-tab-label">TCP</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <div class="aui-badge">99</div>
+            <i class="aui-iconfont aui-icon-cart"></i>
+            <div class="aui-bar-tab-label">UDP</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <div class="aui-dot"></div>
+            <i class="aui-iconfont aui-icon-my"></i>
+            <div class="aui-bar-tab-label">Modbus</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <div class="aui-dot"></div>
+            <i class="aui-iconfont aui-icon-like"></i>
+            <div class="aui-bar-tab-label">Server</div>
+        </div>
+    </footer>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/aui-tab.js"></script>
 <script type="text/javascript">
     apiready = function(){
         api.setStatusBarStyle({
             style: 'light'
         });
         api.parseTapmode();
-        var header = $api.byId('header');
-        var headerPos = $api.offset(header);
-        var body_h = $api.offset($api.dom('body')).h;
+
         var header_h = $api.offset($api.byId('header')).h;
+        var footer_h=$api.offset($api.byId('footer')).h;
+        var win_h=api.winHeight;
+        console.log('winHeight:'+api.winHeight);
+        console.log('screeHeight:'+api.screeHeight);
+        console.log('frameHeight:'+api.frameHeight);
+
         api.openFrame({
             name: 'index_frm',
             url: './html/index_frm.html',
@@ -42,8 +76,29 @@
                 w: 'auto',
                 h: 'auto'
             }
-        })
+        });
+        var tab = new auiTab({
+            element:document.getElementById("footer")
+        },function(ret){
+            console.log(ret);
+            var fname='test'+ret.index+'_frm.html';
+            if(ret.index>=4){
+              fname='test'+ret.index+'_win.html';
+            }
+            api.openFrame({
+                name: fname,
+                url: './html/'+fname,
+                bounces: true,
+                rect: {
+                    x: 0,
+                    y: header_h,
+                    w: 'auto',
+                    h: 'auto'
+                }
+            });
+        });
     };
+
     function openClub(){
         var delay = 0;
         if(api.systemType != 'ios'){
