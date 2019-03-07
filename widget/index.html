@@ -86,13 +86,13 @@
         }, function(ret) {
             console.log(ret);
             var fname = 'test' + ret.index + '_frm.html';
-            if (ret.index >= 4) {
-                fname = 'test' + ret.index + '_win.html';
+            if (ret.index == 1) {
+                fname = 'index_frm.html';
             }
             api.openFrame({
                 name: fname,
                 url: './html/' + fname,
-                bounces: true,
+                bounces: false,
                 rect: {
                     x: 0,
                     y: header_h,
