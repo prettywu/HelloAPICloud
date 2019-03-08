@@ -1,0 +1,42 @@
+
+{
+  "name": "root",
+  "tabBar": {
+    "frames": [{
+      "title": "Home",
+      "name": "page1",
+      "url": "widget://html/index_frm.html"
+    }, {
+      "title": "Client",
+      "name": "page2",
+      "url": "widget://html/test1_frm.html"
+    }, {
+      "title": "Server",
+      "name": "page3",
+      "url": "widget://html/test2_frm.html"
+    },
+    {
+      "title": "Test",
+      "name": "page4",
+      "url": "widget://html/test3_frm.html"
+    }
+  ],
+    "list": [{
+      "text": "主页",
+      "iconPath": "widget://image/home.png",
+      "selectedIconPath": "widget://image/home_hov.png"
+    }, {
+      "text": "客户端",
+      "iconPath": "widget://image/client.png",
+      "selectedIconPath": "widget://image/client_hov.png"
+    }, {
+      "text": "服务端",
+      "iconPath": "widget://image/server.png",
+      "selectedIconPath": "widget://image/server_hov.png"
+    }, {
+      "text": "测试",
+      "iconPath": "widget://image/test.png",
+      "selectedIconPath": "widget://image/test_hov.png"
+    }]
+  }
+}
