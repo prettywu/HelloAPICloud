@@ -3,7 +3,7 @@
   "name": "root",
   "title":"通讯测试",
   "navigationBar":{
-    hideBackButton:false
+    hideBackButton:true
   },
   "tabBar": {
     "animated":true,
