@@ -1,7 +1,12 @@
 
 {
   "name": "root",
+  "title":"通讯测试",
+  "navigationBar":{
+    hideBackButton:false
+  },
   "tabBar": {
+    "animated":true,
     "frames": [{
       "title": "Home",
       "name": "page1",
