@@ -182,9 +182,11 @@
 
 </body>
 <script type="text/javascript">
+    var server;
     apiready = function() {
         api.parseTapmode();
 
+        server = api.require('socketManager');
     };
 
     function closeWin() {

@@ -9,103 +9,187 @@
 </head>
 
 <body>
-  <ul class="aui-list aui-form-list">
-      <li class="aui-list-header">配置</li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  服务端  IP
-              </div>
-              <div class="aui-list-item-input">
-                  <input type="text" placeholder="IP">
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  服务端Port
-              </div>
-              <div class="aui-list-item-input">
-                  <input type="number" placeholder="Port">
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  本地Port
-              </div>
-              <div class="aui-list-item-input">
-                  <input type="number" placeholder="Port">
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  协  议
-              </div>
-              <div class="aui-list-item-input">
-                  <select>
-                          <option>Modbus-RTU</option>
-                          <option>Modbus-TCP</option>
-                      </select>
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  状  态
-              </div>
-              <div class="aui-list-item-input">
-                  <div class="aui-font-size-12 aui-text-danger">未连接</div>
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
-              <div class="aui-btn aui-btn-primary aui-margin-r-5"><span class="aui-iconfont aui-icon-refresh"></span>连接</div>
-          </div>
-      </li>
-
-      <li class="aui-list-header">通讯</li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  发送
-              </div>
-              <div class="aui-list-item-input">
-                  <textarea placeholder="输入内容"></textarea>
-              </div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner  aui-list-item-center aui-list-item-btn">
-              <div class="aui-btn aui-btn-info aui-margin-r-5"><span class="aui-iconfont aui-icon-mail"></span>发送</div>
-          </div>
-      </li>
-      <li class="aui-list-item">
-          <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">
-                  接收
-              </div>
-              <div class="aui-list-item-input">
-                  <textarea placeholder="..."></textarea>
-              </div>
-          </div>
-      </li>
-  </ul>
+    <ul class="aui-list aui-form-list">
+        <li class="aui-list-header">配置</li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    服务端 IP
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="text" id="txt_sip" placeholder="IP">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    服务端Port
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="number" id="txt_sport" placeholder="Port">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    本地Port
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="number" placeholder="Port">
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">协 议</div>
+                <div class="aui-list-item-input">
+                    <select><option value='Modbus-RTU'>Modbus-RTU</option><option type="Modbus-TCP">Modbus-TCP</option></select>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    状 态
+                </div>
+                <div class="aui-list-item-input">
+                    <div class="aui-font-size-12 aui-text-danger aui-text-success" id="txt_state">未连接</div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                <div class="aui-btn aui-btn-primary aui-margin-r-5" id="btn_client"><span class="aui-iconfont aui-icon-refresh"></span>连接</div>
+            </div>
+        </li>
+        <li class="aui-list-header">通讯</li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    发送
+                </div>
+                <div class="aui-list-item-input">
+                    <textarea placeholder="输入内容"></textarea>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner  aui-list-item-center aui-list-item-btn">
+                <div class="aui-btn aui-btn-info aui-margin-r-5" id="btn_send" disabled="disabled"><span class="aui-iconfont aui-icon-mail"></span>发送</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    接收
+                </div>
+                <div class="aui-list-item-input">
+                    <textarea placeholder="..."></textarea>
+                </div>
+            </div>
+        </li>
+    </ul>
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
+    var socketManager;
+    var _sid = 0;
+    var _host = '';
+    var _port = '';
+    var _type = '';
     apiready = function() {
         api.parseTapmode();
-
-
+        socketManager = api.require('socketManager');
+        $api.addEvt($api.byId('btn_client'), 'click', connect);
+        $api.addEvt($api.byId('btn_send'), 'click', function() {
+            var str = $api.val($api.byId('txt_send'));
+            socketManager.write({
+                sid: _sid,
+                data: str
+            }, function(ret, err) {
+                if (ret.status) {
+                    alert(JSON.stringify(ret));
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+        });
     };
+
+    function connect() {
+        _host = document.getElementById('txt_sip').value;
+        _port = document.getElementById('txt_sport').value;
+        if (!_host) {
+            $api.toast('提示', '请填写IP地址', 1000);
+        }
+        if (!_port) {
+            $api.toast('提示', '请填写端口', 1000);
+        }
+
+        socketManager.createSocket({
+            host: _host,
+            port: _port,
+            type: 'tcp'
+        }, function(ret, err) {
+            //{
+            //sid:            //socket的唯一标识，字符串类型
+            //state:            //socket状态码，见常量里面的socket状态码，数字类型
+            //data:            //state为接收数据时的数据，字符串类型
+            //host：            //udp收到数据时发送方地址
+            //port：            //udp收到数据时发送方端口
+            //}
+            if (ret) {
+                if (ret == 0) {
+                    _sid = ret.sid;
+                    $api.removeCls($api.byId("txt_state"), 'aui-text-danger');
+                    $api.addCls($api.byId('txt_state'), 'aui-text-success');
+                    $api.text($api.byId("txt_state"), '已连接');
+                    $api.text($api.byId("btn_client"), '断开连接');
+                    $api.rmEvt($api.byId('btn_client'), 'click', function(){
+                        $api.addEvt($api.byId('btn_client'), 'click', disconnect);
+                    });
+                    $api.attr($api.byId("txt_sip"), 'disabled', 'disabled');
+                    $api.attr($api.byId("txt_sport"), 'disabled', 'disabled');
+                    $api.removeAttr($api.byId('btn_send'), 'disabled');
+
+                    $api.toast('连接成功');
+                }
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function disconnect() {
+        socketManager.closeSocket({
+            sid: _sid
+        }, function(ret, err) {
+            if (ret.status) {
+                _sid = 0;
+                $api.removeCls($api.byId("txt_state"), 'aui-text-success');
+                $api.addCls($api.byId('txt_state'), 'aui-text-danger');
+                $api.text($api.byId("txt_state"), '未连接');
+                $api.text($api.byId("btn_client"), '连接');
+                $api.rmEvt($api.byId('btn_client'), 'click', function(){
+                    $api.addEvt($api.byId('btn_client'), 'click', connect);
+                });
+
+                $api.removeAttr($api.byId("txt_sip"), 'disabled');
+                $api.removeAttr($api.byId("txt_sport"), 'disabled');
+                $api.attr($api.byId('btn_send'), 'disabled', 'disabled');
+
+                $api.toast('已断开');
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+
+    }
 
     function closeWin() {
         api.closeWin({});
