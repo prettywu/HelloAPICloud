@@ -71,7 +71,7 @@
                     发送
                 </div>
                 <div class="aui-list-item-input">
-                    <textarea placeholder="输入内容"></textarea>
+                    <textarea id="txt_send" placeholder="输入内容"></textarea>
                 </div>
             </div>
         </li>
@@ -105,7 +105,11 @@
         socketManager = api.require('socketManager');
         $api.addEvt($api.byId('btn_client'), 'click', connect);
         $api.addEvt($api.byId('btn_send'), 'click', function() {
-            var str = $api.val($api.byId('txt_send'));
+            var _str = $api.val($api.byId('txt_send'));
+            if(!_str){
+              $api.toast('提示', '请输入要发送的内容',  3000);
+              return;
+            }
             socketManager.write({
                 sid: _sid,
                 data: str
@@ -124,9 +128,11 @@
         _port = document.getElementById('txt_sport').value;
         if (!_host) {
             $api.toast('提示', '请填写IP地址', 1000);
+            return;
         }
         if (!_port) {
             $api.toast('提示', '请填写端口', 1000);
+            return;
         }
 
         socketManager.createSocket({
