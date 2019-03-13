@@ -19,34 +19,6 @@
 
 <body>
 
-    <header class="aui-bar aui-bar-nav aui-text-left header" id="header">
-        <h1>
-          <a class="aui-btn aui-pull-right" tapmode onclick="openClub()">
-              <i class="aui-iconfont aui-icon-question"></i>
-          </a>
-          AUI 2.1
-      </h1>
-    </header>
-    <footer class="aui-bar aui-bar-tab" id="footer">
-        <div class="aui-bar-tab-item aui-active" tapmode>
-            <i class="aui-iconfont aui-icon-home"></i>
-            <div class="aui-bar-tab-label">首页</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <i class="aui-iconfont aui-icon-star"></i>
-            <div class="aui-bar-tab-label">Client</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-badge">99</div>
-            <i class="aui-iconfont aui-icon-cart"></i>
-            <div class="aui-bar-tab-label">Server</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-dot"></div>
-            <i class="aui-iconfont aui-icon-like"></i>
-            <div class="aui-bar-tab-label">My</div>
-        </div>
-    </footer>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/aui-tab.js"></script>
@@ -57,43 +29,47 @@
         });
         api.parseTapmode();
 
-        var header_h = $api.offset($api.byId('header')).h;
-        var footer_h = $api.offset($api.byId('footer')).h;
-        var win_h = api.winHeight;
-        var frm_h = win_h - header_h - footer_h;
-        console.log('winHeight:' + api.winHeight);
-        console.log('screeHeight:' + api.screeHeight);
-        console.log('frameHeight:' + api.frameHeight);
 
-        api.openFrame({
-            name: 'index_frm',
-            url: './html/index_frm.html',
-            bounces: true,
-            rect: {
-                x: 0,
-                y: header_h,
-                w: 'auto',
-                h: frm_h
-            }
-        });
-        var tab = new auiTab({
-            element: document.getElementById("footer")
-        }, function(ret) {
-            console.log(ret);
-            var fname = 'test' + ret.index + '_frm.html';
-            if (ret.index == 1) {
-                fname = 'index_frm.html';
-            }
-            api.openFrame({
-                name: fname,
-                url: './html/' + fname,
-                bounces: false,
-                rect: {
-                    x: 0,
-                    y: header_h,
-                    w: 'auto',
-                    h: frm_h
+        var NVTabBar = api.require('NVTabBar');
+        NVTabBar.open({
+            items: [{
+                icon: {
+                    normal: 'widget://image/home2.png',
+                    highlight: 'widget://image/home2_h.png',
+                    selected: 'widget://image/home2_h.png'
+                },
+                title: {
+                    text: '主页',
+                    normal: '#696969',
+                    selected: '#eb4f38'
                 }
+            }, {
+                icon: {
+                    normal: 'widget://image/type.png',
+                    highlight: 'widget://image/type_h.png',
+                    selected: 'widget://image/type_h.png'
+                },
+                title: {
+                    text: '发现',
+                    normal: '#696969',
+                    selected: '#eb4f38'
+                }
+            }, {
+                icon: {
+                    normal: 'widget://image/my.png',
+                    highlight: 'widget://image/my_h.png',
+                    selected: 'widget://image/my_h.png'
+                },
+                title: {
+                    text: '我的',
+                    normal: '#696969',
+                    selected: '#eb4f38'
+                }
+            }],
+            selectedIndex: 0
+        }, function(ret, err) {
+            api.alert({
+                msg: JSON.stringify(ret)
             });
         });
     };
