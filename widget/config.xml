@@ -6,7 +6,7 @@
     <author email="developer@apicloud.com" href="http://www.apicloud.com">
         APICloud.SIR
     </author>
-    <content src="app.json" />
+    <content src="index.html" />
     <access origin="*" />
     <preference name="windowBackground" value="#FFF" />
     <permission name="call" />
