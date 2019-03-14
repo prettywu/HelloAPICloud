@@ -17,7 +17,7 @@
                     服务端 IP
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="text" id="txt_sip" placeholder="IP">
+                    <input type="text" id="txt_sip" placeholder="192.168.137.1" value="192.168.137.1">
                 </div>
             </div>
         </li>
@@ -27,7 +27,7 @@
                     服务端Port
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="number" id="txt_sport" placeholder="Port">
+                    <input type="number" id="txt_sport" placeholder="502" value="502">
                 </div>
             </div>
         </li>
@@ -71,7 +71,7 @@
                     发送
                 </div>
                 <div class="aui-list-item-input">
-                    <textarea id="txt_send" placeholder="输入内容"></textarea>
+                    <textarea id="txt_send" placeholder="输入内容">00 00 00 00 00 06 FF 01 00 00 00 01</textarea>
                 </div>
             </div>
         </li>
@@ -86,7 +86,7 @@
                     接收
                 </div>
                 <div class="aui-list-item-input">
-                    <textarea placeholder="..."></textarea>
+                    <textarea id="txt_receive" placeholder="..."></textarea>
                 </div>
             </div>
         </li>
@@ -123,7 +123,8 @@
         socketManager.createSocket({
             host: _host,
             port: _port,
-            type: 'tcp'
+            type: 'tcp',
+            charset:'iso-8859-1'
         }, function(ret, err) {
             //{
             //sid:            //socket的唯一标识，字符串类型
@@ -132,8 +133,10 @@
             //host：            //udp收到数据时发送方地址
             //port：            //udp收到数据时发送方端口
             //}
+            console.log(JSON.stringify(ret));
             if (ret) {
-                if (ret == 0) {
+                //连接成功
+                if (ret.state == 102) {
                     _sid = ret.sid;
                     $api.removeCls($api.byId("txt_state"), 'aui-text-danger');
                     $api.addCls($api.byId('txt_state'), 'aui-text-success');
@@ -148,9 +151,12 @@
 
                     $api.toast('连接成功');
                 }
-                alert(JSON.stringify(ret));
+                //接收数据
+                if (ret.state = 103) {
+                    receiveMsg(ret.data);
+                }
             } else {
-                alert(JSON.stringify(err));
+                $api.toast('连接失败');
             }
         });
     }
@@ -188,9 +194,11 @@
             $api.toast('请输入要发送的内容', 3000);
             return;
         }
+
+        var _send=_str.HexCodeToStr();
         socketManager.write({
             sid: _sid,
-            data: str
+            data: _send
         }, function(ret, err) {
             if (ret.status) {
                 alert(JSON.stringify(ret));
@@ -200,9 +208,73 @@
         });
     }
 
+    function receiveMsg(data) {
+        var msg_history = $api.val($api.byId('txt_receive'));
+        var msg_c = (new Date()).Format('yyyy-MM-dd HH:mm:ss') + ' \n ' + data;
+        $api.val($api.byId('txt_receive'), msg_history + ' \n ' + msg_c);
+    }
 
     function closeWin() {
         api.closeWin({});
+    }
+
+    //---------------------------------------------------
+    // 日期格式化
+    // 格式 YYYY/yyyy/YY/yy 表示年份
+    // MM/M 月份
+    // W/w 星期
+    // dd/DD/d/D 日期
+    // hh/HH/h/H 时间
+    // mm/m 分钟
+    // ss/SS/s/S 秒
+    //---------------------------------------------------
+    Date.prototype.Format = function(formatStr) {
+        var str = formatStr;
+        var Week = ['日', '一', '二', '三', '四', '五', '六'];
+
+        str = str.replace(/yyyy|YYYY/, this.getFullYear());
+        str = str.replace(/yy|YY/, (this.getYear() % 100) > 9 ? (this.getYear() % 100).toString() : '0' + (this.getYear() % 100));
+
+        str = str.replace(/MM/, this.getMonth() > 9 ? this.getMonth().toString() : '0' + this.getMonth());
+        str = str.replace(/M/g, this.getMonth());
+
+        str = str.replace(/w|W/g, Week[this.getDay()]);
+
+        str = str.replace(/dd|DD/, this.getDate() > 9 ? this.getDate().toString() : '0' + this.getDate());
+        str = str.replace(/d|D/g, this.getDate());
+
+        str = str.replace(/hh|HH/, this.getHours() > 9 ? this.getHours().toString() : '0' + this.getHours());
+        str = str.replace(/h|H/g, this.getHours());
+        str = str.replace(/mm/, this.getMinutes() > 9 ? this.getMinutes().toString() : '0' + this.getMinutes());
+        str = str.replace(/m/g, this.getMinutes());
+
+        str = str.replace(/ss|SS/, this.getSeconds() > 9 ? this.getSeconds().toString() : '0' + this.getSeconds());
+        str = str.replace(/s|S/g, this.getSeconds());
+
+        return str;
+    }
+
+    //---------------------------------------------------
+    //16进制转字符串
+    //---------------------------------------------------
+    String.prototype.HexCodeToStr=function() {　
+
+        var trimedStr = $api.trimAll(this);　　
+        var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr;　　
+        var len = rawStr.length;　　
+        if (len % 2 !== 0) {　　　　
+            alert("Illegal Format ASCII Code!");　　　　
+            return "";　　
+        }　　
+        var curCharCode;　　
+        var resultStr = [];　　
+        for (var i = 0; i < len; i = i + 2) {　　　　
+            curCharCode = parseInt(rawStr.substr(i, 2), 16); // ASCII Code Value
+            var s=String.fromCharCode(curCharCode);
+            console.log(s);
+            resultStr.push(s);　　
+        }
+        return resultStr.join("");
     }
 </script>
 

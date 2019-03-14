@@ -6,33 +6,65 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" type="text/css" href="./css/aui.css" />
-    <style type="text/css">
-        .header {
-            padding: 2.5rem 0.5rem 2rem 0.5rem;
-        }
-
-        footer .aui-iconfont {
-            /*font-weight: bold;*/
+    <style>
+        .aui-bar-dark {
+            background-color: #333;
         }
     </style>
 </head>
 
 <body>
-
+    <header class="aui-bar aui-bar-nav aui-bar-dark" id="header">
+        <a class="aui-pull-left aui-btn aui-btn-outlined">
+            <span class="aui-iconfont aui-icon-menu"></span>
+        </a>
+        <div class="aui-title">首页</div>
+        <a class="aui-pull-right aui-btn aui-btn-outlined">
+            <span class="aui-iconfont aui-icon-search"></span>
+        </a>
+    </header>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/aui-tab.js"></script>
 <script type="text/javascript">
+    var NVTabBar;
     apiready = function() {
         api.setStatusBarStyle({
             style: 'light'
         });
         api.parseTapmode();
+        NVTabBar = api.require('NVTabBar');
+        openTabBar();
+        openFrameGroup();
+    };
 
+    function closeWin() {
+        api.closeWin({});
+    }
 
-        var NVTabBar = api.require('NVTabBar');
+    function openTabBar() {
         NVTabBar.open({
+            styles: {
+                bg: '#333',
+                h: 55,
+                dividingLine: {
+                    width: 0.5,
+                    color: '#000'
+                },
+                badge: {
+                    bgColor: '#ff0',
+                    numColor: '#fff',
+                    size: 6.0
+                }
+            },
             items: [{
+                bg: {
+                    marginB: -2,
+                },
+                iconRect: { //（可选项）JSON对象；子项按钮图标的大小配置，位置居中显示；默认值见内部字段
+                    w: 25.0, //（可选项）数字类型；子项按钮图标的宽度；默认：25.0
+                    h: 25.0, //（可选项）数字类型；子项按钮图标的高度；默认：25.0
+                },
                 icon: {
                     normal: 'widget://image/home2.png',
                     highlight: 'widget://image/home2_h.png',
@@ -40,10 +72,18 @@
                 },
                 title: {
                     text: '主页',
-                    normal: '#696969',
-                    selected: '#eb4f38'
+                    normal: '#8a8a8a',
+                    selected: '#1296db',
+                    marginB: 5
                 }
             }, {
+                bg: {
+                    marginB: -2,
+                },
+                iconRect: { //（可选项）JSON对象；子项按钮图标的大小配置，位置居中显示；默认值见内部字段
+                    w: 25.0, //（可选项）数字类型；子项按钮图标的宽度；默认：25.0
+                    h: 25.0, //（可选项）数字类型；子项按钮图标的高度；默认：25.0
+                },
                 icon: {
                     normal: 'widget://image/type.png',
                     highlight: 'widget://image/type_h.png',
@@ -51,10 +91,18 @@
                 },
                 title: {
                     text: '发现',
-                    normal: '#696969',
-                    selected: '#eb4f38'
+                    normal: '#8a8a8a',
+                    selected: '#1296db',
+                    marginB: 5
                 }
             }, {
+                bg: {
+                    marginB: -2,
+                },
+                iconRect: { //（可选项）JSON对象；子项按钮图标的大小配置，位置居中显示；默认值见内部字段
+                    w: 25.0, //（可选项）数字类型；子项按钮图标的宽度；默认：25.0
+                    h: 25.0, //（可选项）数字类型；子项按钮图标的高度；默认：25.0
+                },
                 icon: {
                     normal: 'widget://image/my.png',
                     highlight: 'widget://image/my_h.png',
@@ -62,38 +110,58 @@
                 },
                 title: {
                     text: '我的',
-                    normal: '#696969',
-                    selected: '#eb4f38'
+                    normal: '#8a8a8a',
+                    selected: '#1296db',
+                    marginB: 5
                 }
             }],
             selectedIndex: 0
         }, function(ret, err) {
-            api.alert({
-                msg: JSON.stringify(ret)
-            });
-        });
-    };
-
-    function openClub() {
-        var delay = 0;
-        if (api.systemType != 'ios') {
-            delay = 300;
-        }
-        api.openWin({
-            name: 'club_win',
-            url: './html/club_win.html',
-            bounces: false,
-            delay: delay,
-            slidBackEnabled: true,
-            vScrollBarEnabled: false,
-            progress: {
-                type: "page"
+            if (ret && ret.eventType == "click") {
+                console.log(ret.index);
+                api.setFrameGroupIndex({
+                    name: 'mainFrame',
+                    index: ret.index,
+                    scroll: true
+                })
             }
         });
     }
 
-    function closeWin() {
-        api.closeWin({});
+    function openFrameGroup() {
+        var h_header = $api.offset($api.byId('header')).h;
+        api.openFrameGroup({
+            name: 'mainFrame',
+            rect: {
+                x: 0,
+                marginTop: h_header,
+                w: 'auto',
+                marginBottom: 55
+            },
+            scrollEnabled: true,
+            frames: [{
+                name: 'frm_home',
+                url: 'html/test1_frm.html',
+                pageParam: {
+                    name: 'value'
+                },
+                bounces: true
+            }, {
+                name: 'frm_discovery',
+                url: 'html/test2_frm.html',
+                pageParam: {
+                    name: 'value'
+                },
+                bounces: true
+            }, {
+                name: 'frm_my',
+                url: 'html/test3_frm.html',
+                pageParam: {
+                    name: 'value'
+                },
+                bounces: true
+            }]
+        }, function(ret, err) {});
     }
 </script>
 
